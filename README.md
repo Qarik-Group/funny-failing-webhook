@@ -37,7 +37,11 @@ kubectl apply -f webhook-config.yaml
 
 Whilst this service is already running on Cloud Run, you might want to fork and deploy it yourself. You might want to see the logs.
 
-Or, more likely, you are me. And I might want to do this in the future and need documentation. Luckily, I wrote myself the following documentation.
+Or, more likely, you are me. And I might want to do this in the future and need documentation. Luckily, I wrote myself a `Makefile` and the following documentation.
+
+```plain
+make
+```
 
 At the time of writing Google Cloud Run requires OCIs to be hosted on [Google Container Registry](https://console.cloud.google.com/gcr) (GCR):
 
