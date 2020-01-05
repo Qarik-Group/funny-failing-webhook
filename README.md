@@ -33,6 +33,10 @@ Step 3: Take down the webhook and delete the safe namespace:
 kubectl apply -f webhook-config.yaml
 ```
 
+Backend logs for the webhook show the receipt of AdmissionReview requests:
+
+![logs](https://p198.p4.n0.cdn.getcloudapp.com/items/Jru7xKEg/cloudrun-webhook-logs.png?v=6dbd50054b1ef239c97cf106e7020717)
+
 ## Deploy to Cloud Run
 
 Whilst this service is already running on Cloud Run, you might want to fork and deploy it yourself. You might want to see the logs.
