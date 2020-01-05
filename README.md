@@ -30,7 +30,7 @@ Error from server: error when creating "test-resources/pod.yaml": admission webh
 Step 3: Take down the webhook and delete the safe namespace:
 
 ```plain
-kubectl apply -f webhook-config.yaml
+kubectl delete -f webhook-config.yaml
 ```
 
 Backend logs for the webhook show the receipt of AdmissionReview requests:
