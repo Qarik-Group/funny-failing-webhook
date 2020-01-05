@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  # Create a namespace that we'll match on
+  name: funny-failing-webhook-test
+  labels:
+    funny-failing-webhook: "true"
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: funny-failing-webhook
+webhooks:
+  - name: funny-failing-webhook.starkandwayne.com
+    sideEffects: None
+    rules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - "*"
+        operations:
+          - "CREATE"
+          - "UPDATE"
+        resources:
+          - "pods"
+      - apiGroups:
+          - "apps"
+        apiVersions:
+          - "*"
+        operations:
+          - "CREATE"
+          - "UPDATE"
+        resources:
+          - "deployments"
+          - "statefulsets"
+          - "daemonsets"
+      - apiGroups:
+          - "batch"
+        apiVersions:
+          - "*"
+        operations:
+          - "CREATE"
+          - "UPDATE"
+        resources:
+          - "jobs"
+    namespaceSelector:
+      matchExpressions:
+        # Any Namespace with a label matching the below will have its
+        # annotations validated by this admission controller
+        - key: "funny-failing-webhook"
+          operator: In
+          values: ["true"]
+    failurePolicy: Fail
+    clientConfig:
+      url: https://funny-failing-webhook-lg2hslfa4a-uc.a.run.app/funny-failing-webhook
+      caBundle: ""

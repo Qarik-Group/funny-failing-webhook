@@ -6,9 +6,38 @@ Any requests to CREATE pods into a specific namespace will fail, with a random f
 
 This example webhook server assumes it has HTTPS provided for it by Cloud Run, and does not need to talk to your Kubernetes cluster, so its much simpler to write than common webooks that might want to interact with your Kubernetes cluster, or might need to manage their own TLS certificates for HTTPS.
 
+Step 1: Install the webhook and create a safe namespace for testing:
+
+```plain
+kubectl apply -f webhook-config.yaml
+```
+
+Step 2: Create some resources into the safe namespace:
+
+```plain
+kubectl apply -f test-resources/
+```
+
+The output will show them all being rejected:
+
+```plain
+Error from server: error when creating "test-resources/daemonset.yaml": admission webhook "funny-failing-webhook.starkandwayne.com" denied the request: admission error: Yeah, no, not happening (allowed: false)
+Error from server: error when creating "test-resources/deployment.yaml": admission webhook "funny-failing-webhook.starkandwayne.com" denied the request: admission error: Yeah, no, not happening (allowed: false)
+Error from server: error when creating "test-resources/job.yaml": admission webhook "funny-failing-webhook.starkandwayne.com" denied the request: admission error: Yeah, no, not happening (allowed: false)
+Error from server: error when creating "test-resources/pod.yaml": admission webhook "funny-failing-webhook.starkandwayne.com" denied the request: admission error: Yeah, no, not happening (allowed: false)
+```
+
+Step 3: Take down the webhook and delete the safe namespace:
+
+```plain
+kubectl apply -f webhook-config.yaml
+```
+
 ## Deploy to Cloud Run
 
-Whilst this service is already running on Cloud Run, you might want to fork and deploy it yourself. Or, more likely, I might want to do this in the future and need documentation. Luckily, I wrote myself the following documentation.
+Whilst this service is already running on Cloud Run, you might want to fork and deploy it yourself. You might want to see the logs.
+
+Or, more likely, you are me. And I might want to do this in the future and need documentation. Luckily, I wrote myself the following documentation.
 
 At the time of writing Google Cloud Run requires OCIs to be hosted on [Google Container Registry](https://console.cloud.google.com/gcr) (GCR):
 

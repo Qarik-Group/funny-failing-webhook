@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: d-nginx
+  name: nginx
+  namespace: funny-failing-webhook-test
+spec:
+  selector:
+    matchLabels:
+      run: d-nginx
+  template:
+    metadata:
+      labels:
+        run: d-nginx
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        resources: {}

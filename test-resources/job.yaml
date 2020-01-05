@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    job-name: job-whats-my-arch
+  name: job-whats-my-arch
+  namespace: funny-failing-webhook-test
+spec:
+  backoffLimit: 6
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      labels:
+        job-name: job-whats-my-arch
+    spec:
+      containers:
+      - command:
+        - uname
+        - -a
+        image: busybox
+        imagePullPolicy: Always
+        name: whats-my-arch
+        resources: {}
+      restartPolicy: Never
