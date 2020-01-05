@@ -15,7 +15,7 @@ COPY . .
 RUN VERSION=$(git describe --all --exact-match `git rev-parse HEAD` | grep tags | sed 's/tags\///') && \
   GIT_COMMIT=$(git rev-list -1 HEAD) && \
   env ${OPTS} CGO_ENABLED=0 GOOS=linux \
-  go build -o funny-failing-webhook -v ./cmd
+  go build -o funny-failing-webhook -v ./...
 
 FROM alpine AS app
 COPY --from=build /buildspace/funny-failing-webhook /usr/bin/funny-failing-webhook
