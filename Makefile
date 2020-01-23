@@ -1,3 +1,4 @@
+GCLOUD_RUN_NAME=funny-failing-webhook
 GCLOUD_IMAGE?=gcr.io/drnic-257704/funny-failing-webhook
 GCLOUD_REGION?=us-central1
 
@@ -10,7 +11,7 @@ docker:
 	docker push $(GCLOUD_IMAGE)
 
 cloudrun:
-	gcloud run deploy funny-failing-webhook \
+	gcloud run deploy $(GCLOUD_RUN_NAME) \
 		--image $(GCLOUD_IMAGE) \
 		--platform managed \
 		--region $(GCLOUD_REGION) \
